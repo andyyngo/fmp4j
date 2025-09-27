@@ -2,6 +2,7 @@ package dev.sorn.fmp4j.types;
 
 import static java.util.Arrays.stream;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import dev.sorn.fmp4j.exceptions.FmpInvalidIndustryException;
 
 public enum FmpIndustry implements FmpValueObject<String> {
@@ -171,7 +172,8 @@ public enum FmpIndustry implements FmpValueObject<String> {
         this.value = value;
     }
 
-    public static FmpIndustry fromValue(String value) {
+    @JsonCreator
+    public static FmpIndustry industry(String value) {
         return stream(FmpIndustry.values())
                 .filter(p -> p.value.equals(value))
                 .findFirst()

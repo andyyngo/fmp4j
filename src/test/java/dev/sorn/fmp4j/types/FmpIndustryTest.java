@@ -1,5 +1,6 @@
 package dev.sorn.fmp4j.types;
 
+import static dev.sorn.fmp4j.types.FmpIndustry.industry;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -15,10 +16,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 class FmpIndustryTest {
 
     // --- Parameterized test with all industries ---
-    @ParameterizedTest(name = "fromValue should resolve correctly for {0}")
+    @ParameterizedTest(name = "industry should resolve correctly for {0}")
     @MethodSource("allIndustryLabels")
     void testAllIndustries(String label) {
-        FmpIndustry industry = FmpIndustry.fromValue(label);
+        FmpIndustry industry = industry(label);
         assertEquals(label, industry.value(), "Industry enum should map back to the same label");
     }
 
@@ -28,11 +29,11 @@ class FmpIndustryTest {
 
     // --- Some invalid checks ---
     @Test
-    @DisplayName("fromValue throws exception for invalid inputs")
+    @DisplayName("industry throws exception for invalid inputs")
     void testInvalidIndustries() {
-        Executable invalid1 = () -> FmpIndustry.fromValue("NotAnIndustry");
-        Executable invalid2 = () -> FmpIndustry.fromValue("Steeel"); // typo
-        Executable invalid3 = () -> FmpIndustry.fromValue("");
+        Executable invalid1 = () -> industry("NotAnIndustry");
+        Executable invalid2 = () -> industry("Steeel"); // typo
+        Executable invalid3 = () -> industry("");
 
         assertAll(
                 () -> assertThrows(FmpInvalidIndustryException.class, invalid1),
